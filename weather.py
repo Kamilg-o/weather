@@ -32,7 +32,7 @@ if os.stat("plik.json").st_size == 0:
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
-    print("polaczylem sie z api")
+   
 
     with open("plik.json", "a", newline='') as file:
         file.write(json.dumps(response.json()))
