@@ -15,3 +15,9 @@ d1 = datetime.datetime.strptime(date, "%Y-%m-%d")
 d2 = d1 + datetime.timedelta(days=1)
 d1 = time.mktime(d1.timetuple())
 d2 = time.mktime(d2.timetuple())
+
+class WeatherForecast:
+
+    def __init__(self, key_api):
+        self.key_api = key_api
+        self.weather = {}
