@@ -74,3 +74,12 @@ class WeatherForecast:
             else:
                 k = "nie wiem"
             yield i, k
+
+
+    def __getitem__(self, item):
+        return self.weather[item]
+
+    def __iter__(self):
+        for i in self.weather.keys():
+            i = datetime.datetime.fromtimestamp(i).strftime('%Y-%m-%d')
+            yield i
