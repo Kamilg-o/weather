@@ -83,3 +83,9 @@ class WeatherForecast:
         for i in self.weather.keys():
             i = datetime.datetime.fromtimestamp(i).strftime('%Y-%m-%d')
             yield i
+
+wf = WeatherForecast(key_api)
+if os.stat("plik.json").st_size == 0:
+    wf.check_from_api()
+else:
+    wf.check_from_file()
