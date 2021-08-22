@@ -35,3 +35,24 @@ class WeatherForecast:
                     print("nie będzie padać")
                 else:
                     print("nie wiem")
+
+    def check_from_api(self):
+        with open("plik.json", "a") as f:
+            f.write("")
+
+            url = "https://community-open-weather-map.p.rapidapi.com/forecast/daily"
+
+            querystring = {"q": "Warsaw,pl", "lat": "35", "lon": "139", "cnt": "16", "units": "metric or imperial",
+                           "lang": "pl"}
+
+            headers = {
+                'x-rapidapi-key': self.key_api,
+                'x-rapidapi-host': "community-open-weather-map.p.rapidapi.com"
+            }
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+            print("polaczylem sie z api")
+
+            with open("plik.json", "a", newline='') as file:
+                file.write(json.dumps(response.json()))
+            self.weathershowing()
