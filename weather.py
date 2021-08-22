@@ -56,3 +56,21 @@ class WeatherForecast:
             with open("plik.json", "a", newline='') as file:
                 file.write(json.dumps(response.json()))
             self.weathershowing()
+
+    def check_from_file(self):
+        self.weathershowing()
+
+    def items(self):
+        a = json.load(open("plik.json"))
+        b = a["list"]
+        for i in b:
+            self.weather[(i["dt"])] = i["weather"][0]["main"]
+        for i, k in self.weather.items():
+            i = datetime.datetime.fromtimestamp(i).strftime('%Y-%m-%d')
+            if k == "Rain":
+                k = "będzie padać"
+            elif k == "Clear":
+                k = "nie będzie padać"
+            else:
+                k = "nie wiem"
+            yield i, k
