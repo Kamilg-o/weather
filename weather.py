@@ -21,3 +21,17 @@ class WeatherForecast:
     def __init__(self, key_api):
         self.key_api = key_api
         self.weather = {}
+
+    def weathershowing(self):
+        a = json.load(open("plik.json"))
+        b = a["list"]
+        for i in b:
+            self.weather[(i["dt"])] = i["weather"][0]["main"]
+        for i, k in self.weather.items():
+            if i > d1 and i < d2:
+                if k == "Rain":
+                    print("będzie padać")
+                elif k == "Clear":
+                    print("nie będzie padać")
+                else:
+                    print("nie wiem")
