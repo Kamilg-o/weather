@@ -27,10 +27,9 @@ class WeatherForecast:
         b = a["list"]
         for i in b:
             self.weather[(i["dt"])] = i["weather"][0]["main"]
-            for i, k in self.weather.items():
-                for i in self.weather.keys():
-                    i = datetime.datetime.fromtimestamp(int(i)).strftime('%Y-%m-%d')
-                if i == d1:
+            for s, k in self.weather.items():
+                s = datetime.datetime.fromtimestamp(s).strftime('%Y-%m-%d')
+                if s == d1:
                     if k == "Rain":
                         print("będzie padać")
                     elif k == "Clear":
@@ -87,5 +86,4 @@ if os.stat("plik.json").st_size == 0:
     wf.check_from_api()
 else:
     wf.check_from_file()
-for i in wf:
-    print(i)
+print(wf['2021-09-03'])
