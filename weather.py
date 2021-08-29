@@ -12,6 +12,7 @@ date = (sys.argv[2]) if len(sys.argv) >= 3 else a
 
 d1 = datetime.datetime.strptime(date, "%Y-%m-%d")
 
+
 class WeatherForecast:
 
     def __init__(self, key_api):
@@ -25,15 +26,13 @@ class WeatherForecast:
             date_nice_format = datetime.datetime.fromtimestamp(i["dt"]).strftime('%Y-%m-%d')
             k = i["weather"][0]["main"]
             if k == 'Rain':
-                 k = "będzie padać"
+                k = "będzie padać"
             elif k == "Clear":
-                k ="nie będzie padać"
+                k = "nie będzie padać"
             else:
-                k ="nie wiem"
+                k = "nie wiem"
             self.weather[date_nice_format] = k
         print(self.weather[date])
-
-
 
     def check_from_api(self):
         with open("plik.json", "a") as f:
@@ -61,14 +60,7 @@ class WeatherForecast:
 
     def items(self):
         for i, k in self.weather.items():
-            if k == 'Rain':
-                 k = "będzie padać"
-            elif k == "Clear":
-                k ="nie będzie padać"
-            else:
-                k ="nie wiem"
-            yield i,k
-
+            yield i, k
 
     def __getitem__(self, item):
         return self.weather[item]
@@ -77,12 +69,10 @@ class WeatherForecast:
         for i in self.weather.keys():
             yield i
 
+
 wf = WeatherForecast(key_api)
 if os.stat("plik.json").st_size == 0:
     wf.check_from_api()
 else:
     wf.check_from_file()
-print(wf['2021-08-29'])
-
-
 
