@@ -27,14 +27,16 @@ class WeatherForecast:
         b = a["list"]
         for i in b:
             self.weather[(i["dt"])] = i["weather"][0]["main"]
-        for i, k in self.weather.items():
-            if i > d1 and i < d2:
-                if k == "Rain":
-                    print("będzie padać")
-                elif k == "Clear":
-                    print("nie będzie padać")
-                else:
-                    print("nie wiem")
+            for i, k in self.weather.items():
+                for i in self.weather.keys():
+                    i = datetime.datetime.fromtimestamp(int(i)).strftime('%Y-%m-%d')
+                if i == d1:
+                    if k == "Rain":
+                        print("będzie padać")
+                    elif k == "Clear":
+                        print("nie będzie padać")
+                    else:
+                        print("nie wiem")
 
     def check_from_api(self):
         with open("plik.json", "a") as f:
@@ -61,19 +63,15 @@ class WeatherForecast:
         self.weathershowing()
 
     def items(self):
-        a = json.load(open("plik.json"))
-        b = a["list"]
-        for i in b:
-            self.weather[(i["dt"])] = i["weather"][0]["main"]
         for i, k in self.weather.items():
             i = datetime.datetime.fromtimestamp(i).strftime('%Y-%m-%d')
-            if k == "Rain":
-                k = "będzie padać"
+            if k == 'Rain':
+                 k = "będzie padać"
             elif k == "Clear":
-                k = "nie będzie padać"
+                k ="nie będzie padać"
             else:
-                k = "nie wiem"
-            yield i, k
+                k ="nie wiem"
+            yield i,k
 
 
     def __getitem__(self, item):
@@ -89,3 +87,5 @@ if os.stat("plik.json").st_size == 0:
     wf.check_from_api()
 else:
     wf.check_from_file()
+for i in wf:
+    print(i)
