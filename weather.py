@@ -26,16 +26,16 @@ class WeatherForecast:
         a = json.load(open("plik.json"))
         b = a["list"]
         for i in b:
-            self.weather[(i["dt"])] = i["weather"][0]["main"]
-            for s, k in self.weather.items():
-                s = datetime.datetime.fromtimestamp(s).strftime('%Y-%m-%d')
-                if s == d1:
+            date_nice_format = datetime.datetime.fromtimestamp(i["dt"]).strftime('%Y-%m-%d')
+            self.weather[date_nice_format] = i["weather"][0]["main"]
+            for i, k in self.weather.items():
+                if i == d1:
                     if k == "Rain":
-                        print("będzie padać")
+                        k = 'bedzie padac'
                     elif k == "Clear":
-                        print("nie będzie padać")
+                        k = "nie będzie padać"
                     else:
-                        print("nie wiem")
+                        k = "nie wiem"
 
     def check_from_api(self):
         with open("plik.json", "a") as f:
@@ -86,4 +86,6 @@ if os.stat("plik.json").st_size == 0:
     wf.check_from_api()
 else:
     wf.check_from_file()
-print(wf['2021-09-03'])
+print(wf['2021-08-22'])
+
+
