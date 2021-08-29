@@ -1,6 +1,5 @@
 import sys
 import datetime
-import time
 import requests
 import json
 import os
@@ -12,9 +11,6 @@ key_api = (sys.argv[1])
 date = (sys.argv[2]) if len(sys.argv) >= 3 else a
 
 d1 = datetime.datetime.strptime(date, "%Y-%m-%d")
-d2 = d1 + datetime.timedelta(days=1)
-d1 = time.mktime(d1.timetuple())
-d2 = time.mktime(d2.timetuple())
 
 class WeatherForecast:
 
@@ -27,15 +23,17 @@ class WeatherForecast:
         b = a["list"]
         for i in b:
             date_nice_format = datetime.datetime.fromtimestamp(i["dt"]).strftime('%Y-%m-%d')
-            self.weather[date_nice_format] = i["weather"][0]["main"]
-            for i, k in self.weather.items():
-                if i == d1:
-                    if k == "Rain":
-                        k = 'bedzie padac'
-                    elif k == "Clear":
-                        k = "nie będzie padać"
-                    else:
-                        k = "nie wiem"
+            k = i["weather"][0]["main"]
+            if k == 'Rain':
+                 k = "będzie padać"
+            elif k == "Clear":
+                k ="nie będzie padać"
+            else:
+                k ="nie wiem"
+            self.weather[date_nice_format] = k
+        print(self.weather[date])
+
+
 
     def check_from_api(self):
         with open("plik.json", "a") as f:
@@ -63,7 +61,6 @@ class WeatherForecast:
 
     def items(self):
         for i, k in self.weather.items():
-            i = datetime.datetime.fromtimestamp(i).strftime('%Y-%m-%d')
             if k == 'Rain':
                  k = "będzie padać"
             elif k == "Clear":
@@ -78,7 +75,6 @@ class WeatherForecast:
 
     def __iter__(self):
         for i in self.weather.keys():
-            i = datetime.datetime.fromtimestamp(i).strftime('%Y-%m-%d')
             yield i
 
 wf = WeatherForecast(key_api)
@@ -86,6 +82,7 @@ if os.stat("plik.json").st_size == 0:
     wf.check_from_api()
 else:
     wf.check_from_file()
-print(wf['2021-08-22'])
+print(wf['2021-08-29'])
+
 
 
